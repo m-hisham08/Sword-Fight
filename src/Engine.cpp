@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Engine.h"
 
+
 void Engine::initWindow()
 {
 	sf::VideoMode resolution(800, 600);
@@ -29,6 +30,11 @@ void Engine::initWindow()
 
 }
 
+void Engine::initStates()
+{
+	this->stateContainer.push(new MainMenuState(*this->window));
+}
+
 void Engine::updateDeltaTime()
 {
 	this->deltaTime = this->clock.restart().asSeconds();
@@ -55,20 +61,47 @@ void Engine::eventPolling()
 	}
 }
 
-void Engine::update()
+void Engine::update(const float& dt)
 {
-	
+	this->updateStates(dt);
 }
 
 void Engine::render(sf::RenderTarget& target)
 {
+	this->renderStates();
+}
 
+void Engine::updateStates(const float& dt)
+{
+	if (!this->stateContainer.empty())
+	{
+		this->stateContainer.top()->update(dt);
+	}
+}
+
+void Engine::renderStates()
+{
+	if (!this->stateContainer.empty())
+	{
+		this->stateContainer.top()->render();
+	}
 }
 
 Engine::Engine()
 {
 	this->initWindow();
+	this->initStates();
 
+}
+
+Engine::~Engine()
+{
+	while (!this->stateContainer.empty())
+	{
+		delete this->stateContainer.top();
+		this->stateContainer.pop();
+	}
+	delete this->window;
 }
 
 void Engine::run()
@@ -77,7 +110,7 @@ void Engine::run()
 	{
 		this->updateDeltaTime();
 		this->eventPolling();
-		this->update();
+		this->update(this->deltaTime);
 
 		this->window->clear();
 
