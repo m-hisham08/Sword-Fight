@@ -5,9 +5,9 @@ void MainMenuState::initButtons()
 {
 	this->button = new mygui::Buttons(
 		sf::Vector2f(300.f, 150.f),
-		this->window.getSize().x / 2, this->window.getSize().y / 2,
+		this->window.getSize().x / 5, this->window.getSize().y / 2,
 		"res/fonts/ARCADECLASSIC.TTF", "PRESS ANY BUTTON TO START!",
-		50, sf::Color::Black
+		12, sf::Color::Black
 	);
 }
 
