@@ -22,6 +22,7 @@ private:
     
 public:
     MainMenuState(sf::RenderWindow& window);
+    ~MainMenuState();
 
     void update(const float& dt);
     void render();

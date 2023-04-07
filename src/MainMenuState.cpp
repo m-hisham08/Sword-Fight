@@ -34,6 +34,19 @@ MainMenuState::MainMenuState(sf::RenderWindow& window):State(window)
 	this->initButtons();
 }
 
+MainMenuState::~MainMenuState()
+{
+	delete this->bg1Text;
+	delete this->bg2Text;
+	delete this->bg3Text;
+
+	delete this->bg1Sprite;
+	delete this->bg2Sprite;
+	delete this->bg3Sprite;
+
+	delete this->button;
+}
+
 void MainMenuState::update(const float& dt)
 {
 	
